@@ -15,11 +15,11 @@ class TodoManager {
     }
     
     func loadTodos() -> [Todo] {
-        guard let savedTodos = userDefaults.object(forKey: todoKey) as? Data else { return [] }
-        if let loadedTodos = try? JSONDecoder().decode([Todo].self, from: savedTodos) {
-            return loadedTodos
+        guard let savedTodos = userDefaults.object(forKey: todoKey) as? Data,
+              let loadedTodos = try? JSONDecoder().decode([Todo].self, from: savedTodos) else {
+            return []
         }
-        return []
+        return loadedTodos
     }
 }
 
