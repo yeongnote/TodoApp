@@ -38,7 +38,8 @@ class ViewController: UIViewController {
         ]
     
     var tableView: UITableView!
-    var editButton: UIBarButtonItem!
+    var addButton: UIBarButtonItem!
+    var trashButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -59,10 +60,9 @@ class ViewController: UIViewController {
         
         
         // 네비게이션바 오른쪽에 추가 버튼과 편집 버튼 추가
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton)),
-            UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(didTapEditButton))
-        ]
+        addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
+        trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapTrashButton))
+        navigationItem.rightBarButtonItems = [addButton, trashButton]
         
     }
     
@@ -86,8 +86,10 @@ class ViewController: UIViewController {
     }
     
     // 편집 버튼을 눌렀을 때 호출할 메서드
-    @objc func didTapEditButton() {
-        
+    @objc func didTapTrashButton() {
+        let isEditing = !tableView.isEditing
+        tableView.setEditing(isEditing, animated: true)
+
     }
     
     
@@ -170,6 +172,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     // 섹션 헤더 높이 반환
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
+    }
+    // 셀 편집 가능한지 결정
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // 할 일 리스트가 하나 남았을 때 삭제를 진행하면 카테고리도 같이 사라지도록 구현
+            if todos[indexPath.section].list.count == 1 {
+                todos.remove(at: indexPath.section)
+                tableView.deleteSections([indexPath.section], with: .fade)
+            } else {
+                todos[indexPath.section].list.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
     }
 }
 
