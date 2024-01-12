@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Todo Memo"
         // tableView 인스턴스 생성 및 오토레이아웃 설정
         tableView = UITableView(frame: view.bounds, style: .grouped)
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -311,32 +311,4 @@ extension ViewController: TodoCellDelegate {
     }
 }
 
-// MARK: -Pre View
-import SwiftUI
 
-
-struct PreView: PreviewProvider {
-    static var previews: some View {
-        UINavigationController(rootViewController: ViewController()).toPreview()
-    }
-}
-
-
-#if DEBUG
-extension UIViewController {
-    private struct Preview: UIViewControllerRepresentable {
-            let viewController: UIViewController
-
-            func makeUIViewController(context: Context) -> UIViewController {
-                return viewController
-            }
-
-            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-            }
-        }
-
-        func toPreview() -> some View {
-            Preview(viewController: self)
-        }
-}
-#endif
