@@ -56,6 +56,9 @@ class ViewController: UIViewController {
         trashButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(didTapTrashButton))
         navigationItem.rightBarButtonItems = [addButton, trashButton]
         
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        self.tableView.addGestureRecognizer(longPress)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,6 +86,8 @@ class ViewController: UIViewController {
         todos[index].list = list
         TodoManager.shared.saveTodos(todos)
     }
+    
+    
     
     // Todo 삭제
     func deleteTodo(at index: Int) {
@@ -167,6 +172,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             todos[indexPath.section].list.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+        
+        TodoManager.shared.saveTodos(todos)
     }
 }
 
@@ -242,6 +249,49 @@ extension ViewController {
             tableView.reloadData()
         }
         
+    }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                // 선택한 셀 가져오기
+                let selectedTodo = todos[indexPath.section].list[indexPath.row]
+                
+                //UIAlertController 생성
+                let alertController = UIAlertController(title: "할 일 수정", message:"수정할 내용을 입력하세요.", preferredStyle: .alert)
+                
+                //UITextField 추가
+                alertController.addTextField { (textField) in
+                    //기존에 작성된 할 일 내용
+                    textField.text = selectedTodo.title
+                }
+                
+                //UIAlertAction 생성
+                let saveAction = UIAlertAction(title: "저장", style: .default) { [weak self] (_) in
+                    guard let self = self,
+                          let textField = alertController.textFields?.first else { return }
+                    
+                    if let newText = textField.text,
+                       newText != selectedTodo.title {
+                        // 기존 할 일 내용과 다르면 업데이트 하기
+                        var updateList = self.todos[indexPath.section].list
+                        updateList[indexPath.row].title = newText
+                        
+                        self.updateTodo(at: indexPath.row, category: self.todos[indexPath.section].category, list: updateList)
+                        self.tableView.reloadData()
+                    }
+                }
+                
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                
+                alertController.addAction(saveAction)
+                alertController.addAction(cancelAction)
+                
+                //화면에 표시
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
     }
 }
 
