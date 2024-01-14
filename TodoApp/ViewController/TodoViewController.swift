@@ -1,43 +1,8 @@
 
 import UIKit
 
-class TodoManager {
-    static let shared = TodoManager()
-    private let userDefaults = UserDefaults.standard
-    private let todoKey = "TodoData"
-    
-    private init() {}
-    
-    func saveTodos(_ todos: [Todo]) {
-        if let encoded = try? JSONEncoder().encode(todos) {
-            userDefaults.set(encoded, forKey: todoKey)
-        }
-    }
-    
-    func loadTodos() -> [Todo] {
-        guard let savedTodos = userDefaults.object(forKey: todoKey) as? Data,
-              let loadedTodos = try? JSONDecoder().decode([Todo].self, from: savedTodos) else {
-            return []
-        }
-        return loadedTodos
-    }
-    
-    // 할 일 리스트 중 완료된 항목만 추가하기.
-    func loadCompletedTodos() -> [TodoList] {
-        let allTodos = loadTodos()
-        var completedTodos: [TodoList] = []
-        
-        for todo in allTodos {
-            let completed = todo.list.filter({ $0.isCompleted })
-            completedTodos.append(contentsOf: completed)
-        }
-        
-        return completedTodos
-    }
-}
 
-
-class ViewController: UIViewController {
+class TodoViewController: UIViewController {
     
     var todos = [Todo]()
     
@@ -110,7 +75,7 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension TodoViewController: UITableViewDelegate, UITableViewDataSource {
     
     // 섹션 수 반환
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -191,7 +156,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension ViewController {
+extension TodoViewController {
     
     // 추가 버튼을 눌렀을 때 호출할 메서드
     @objc func didTapAddButton() {
@@ -308,7 +273,7 @@ extension ViewController {
     }
 }
 
-extension ViewController: TodoCellDelegate {
+extension TodoViewController: TodoCellDelegate {
     func updateTodoStatus(_ cell: TodoCell, _ isCompleted: Bool) {
         if let indexPath = tableView.indexPath(for: cell) {
             todos[indexPath.section].list[indexPath.row].isCompleted = isCompleted
