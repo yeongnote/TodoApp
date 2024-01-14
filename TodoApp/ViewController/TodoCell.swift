@@ -28,6 +28,13 @@ class TodoCell: UITableViewCell {
         delegate?.didToggleSwitch(self)
         delegate?.updateTodoStatus(self, sender.isOn)
     }
+    
+    func configure(with title: String, isCompleted: Bool) {
+        self.textLabel?.text = title
+        // 스위치 숨기기
+        toggleSwitch.isHidden = isCompleted
+        
+    }
 }
 
 

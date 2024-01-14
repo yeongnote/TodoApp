@@ -16,6 +16,7 @@
 		4678A2902B4F0E03006EFDF6 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4678A28F2B4F0E03006EFDF6 /* Todo.swift */; };
 		4678A2922B4F83F1006EFDF6 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4678A2912B4F83F1006EFDF6 /* SectionHeaderView.swift */; };
 		4678A2B62B4FF164006EFDF6 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4678A2B52B4FF164006EFDF6 /* TodoCell.swift */; };
+		46ECB2D62B53ADEA001664E4 /* CompletedTasksController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECB2D52B53ADEA001664E4 /* CompletedTasksController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4678A28F2B4F0E03006EFDF6 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		4678A2912B4F83F1006EFDF6 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		4678A2B52B4FF164006EFDF6 /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
+		46ECB2D52B53ADEA001664E4 /* CompletedTasksController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTasksController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				4678A27F2B4F0C35006EFDF6 /* ViewController.swift */,
 				4678A2B52B4FF164006EFDF6 /* TodoCell.swift */,
 				4613F3FE2B512964001EF209 /* MainViewController.swift */,
+				46ECB2D52B53ADEA001664E4 /* CompletedTasksController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				4678A2922B4F83F1006EFDF6 /* SectionHeaderView.swift in Sources */,
 				4678A27E2B4F0C35006EFDF6 /* SceneDelegate.swift in Sources */,
 				4678A2902B4F0E03006EFDF6 /* Todo.swift in Sources */,
+				46ECB2D62B53ADEA001664E4 /* CompletedTasksController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

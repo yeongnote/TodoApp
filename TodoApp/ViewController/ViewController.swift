@@ -21,6 +21,19 @@ class TodoManager {
         }
         return loadedTodos
     }
+    
+    // 할 일 리스트 중 완료된 항목만 추가하기.
+    func loadCompletedTodos() -> [TodoList] {
+        let allTodos = loadTodos()
+        var completedTodos: [TodoList] = []
+        
+        for todo in allTodos {
+            let completed = todo.list.filter({ $0.isCompleted })
+            completedTodos.append(contentsOf: completed)
+        }
+        
+        return completedTodos
+    }
 }
 
 
